@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .btn-gradient {
+    @apply inline-flex items-center justify-center rounded py-[4px] px-[5px] text-white shadow-md transition-colors
+           bg-gradient-to-b from-[#40678c] to-[#2c5378] h-auto
+           hover:from-[#467199] hover:to-[#2a4e70]
+           active:from-[#385a7c] active:to-[#254564]
+           focus:outline-none focus:ring-2 focus:ring-white/30
+           disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+}
+@theme {
+  --font-BebasNeue: "Bebas Neue", sans-serif;
+}
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}

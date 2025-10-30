@@ -1,8 +1,11 @@
 import Fastify from "fastify";
 import prismaPlugin from "./plugins/prisma";
 import searchRoutes from "./routes/search";
+import fastifyCors from "@fastify/cors";
 
 const server = Fastify({ logger: true });
+
+server.register(fastifyCors);
 
 server.register(prismaPlugin);
 
