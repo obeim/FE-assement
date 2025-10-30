@@ -9,7 +9,7 @@ export interface Track {
   artworkUrl600: string;
 }
 
-const axiosInstance = axios.create({
+export const axiosInstance = axios.create({
   baseURL: "https://itunes.apple.com",
   httpAgent: new http.Agent({ keepAlive: false }),
   httpsAgent: new https.Agent({ keepAlive: false }),
