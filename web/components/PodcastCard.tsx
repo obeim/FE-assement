@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Podcast } from "../types/podcast";
-import { memo, useCallback } from "react";
+import { memo, useCallback, useMemo } from "react";
 import DropdownMenu from "./DropdownMenu";
 
 function PodcastCard({ podcast }: { podcast: Podcast }) {
@@ -12,9 +12,19 @@ function PodcastCard({ podcast }: { podcast: Podcast }) {
     "#6DC086",
     "#7B7BF0",
   ];
-  const pickRandomColor = useCallback(() => {
-    return subtitlColors[Math.floor(Math.random() * subtitlColors.length)];
-  }, []);
+  const subtitleColor = useMemo(() => {
+    const index =
+      Math.abs(
+        podcast.trackId
+          .toString()
+          .split("")
+          .reduce((acc, char) => {
+            return acc + char.charCodeAt(0);
+          }, 0)
+      ) % subtitlColors.length;
+    return subtitlColors[index];
+  }, [podcast.trackId]);
+
   return (
     <div
       className="rounded shadow-sm hover:shadow-md transition-all duration-300 ease-in-out
@@ -41,7 +51,7 @@ function PodcastCard({ podcast }: { podcast: Podcast }) {
         {podcast.trackName}
       </h3>
       <p
-        style={{ color: pickRandomColor() }}
+        style={{ color: subtitleColor }}
         className=" text-[12px] font-semibold  line-clamp-1"
       >
         {podcast.artistName}
