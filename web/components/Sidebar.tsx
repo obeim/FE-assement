@@ -34,10 +34,9 @@ const Sidebar = () => {
         {sideLinks.map((item, index) => {
           const Icon = item.icon;
           return (
-            <Link
+            <span
               key={index}
-              href={item.link}
-              className="flex items-center gap-3 relative"
+              className="flex items-center gap-3 relative cursor-pointer"
               style={{
                 color: (index === activelink && item.activeColor) || "",
               }}
@@ -54,7 +53,7 @@ const Sidebar = () => {
               ></span>
               <Icon active={index === activelink} />
               {item.title}
-            </Link>
+            </span>
           );
         })}
       </div>

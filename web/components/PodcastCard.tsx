@@ -1,25 +1,56 @@
 import Image from "next/image";
 import { Podcast } from "../types/podcast";
-import ThreeDots from "./icons/ThreeDots";
+import { memo, useCallback } from "react";
+import DropdownMenu from "./DropdownMenu";
 
-export default function PodcastCard({ podcast }: { podcast: Podcast }) {
+function PodcastCard({ podcast }: { podcast: Podcast }) {
+  const subtitlColors = [
+    "#CF8163",
+    "#E86491",
+    "#FF78C9",
+    "#E3BD71",
+    "#6DC086",
+    "#7B7BF0",
+  ];
+  const pickRandomColor = useCallback(() => {
+    return subtitlColors[Math.floor(Math.random() * subtitlColors.length)];
+  }, []);
   return (
-    <div className="rounded shadow-sm hover:shadow-md transition lg:w-[233px] md:w-[150px] w-[100px] mx-auto relative">
+    <div
+      className="rounded shadow-sm hover:shadow-md transition-all duration-300 ease-in-out
+                mx-auto relative
+                w-[25vw] sm:w-[20vw] max-w-[233px] md:w-[15vw] md:max-w-[150px] lg:w-[12vw] lg:max-w-[233px]"
+    >
       <Image
         src={podcast.artworkUrl}
         alt={podcast.trackName}
         width={233}
         height={233}
-        className="mb-3 rounded object-cover lg:w-[233px] lg:h-[233px] md:w-[150px] md:h-[150px]  w-[100px] h-[100px]"
+        className="mb-3 rounded object-cover transition-all duration-300 ease-in-out
+               w-full aspect-square"
       />
-      <ThreeDots className="absolute -right-2 bottom-4 fill-white/40 hover:fill-white cursor-pointer h-5 z-10" />
-
-      <h3 className="font-semibold text-white text-sm line-clamp-1 w-[90%]">
+      <div className="absolute -right-3 bottom-4 fill-white/40 hover:fill-white cursor-pointer h-5 z-10">
+        <DropdownMenu
+          options={[
+            { label: "Add to My Podcasts", onClick() {} },
+            { label: "Add to My Podcasts", onClick() {} },
+          ]}
+        />
+      </div>
+      <h3 className="font-semibold text-white text-[14px] line-clamp-1 w-[90%]">
         {podcast.trackName}
       </h3>
-      <p className=" text-foreground-highlightRed text-xs font-semibold  line-clamp-1">
+      <p
+        style={{ color: pickRandomColor() }}
+        className=" text-[12px] font-semibold  line-clamp-1"
+      >
         {podcast.artistName}
       </p>
     </div>
   );
 }
+
+export default memo(
+  PodcastCard,
+  (prev, current) => prev.podcast.trackId === current.podcast.trackId
+);
