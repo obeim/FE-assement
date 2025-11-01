@@ -1,7 +1,7 @@
 // app/search/page.tsx
 import { Podcast } from "../../types/podcast";
 import { searchPodcasts } from "../../utils/api";
-import SearchPageClient from "./SearchPageClient";
+import SearchPageClient from "../../pages/search/SearchPageClient";
 
 export default async function SearchPage({
   searchParams,

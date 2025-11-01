@@ -22,7 +22,7 @@ export default function SearchBar() {
       onChange={(e) => {
         debouncedSearch(e.target.value);
       }}
-      defaultValue={searchParams.get("q") || ""}
+      defaultValue={searchParams?.get("q") || ""}
       onFocus={(e) => {
         if (!e.target.value) debouncedSearch(e.target.value);
       }}

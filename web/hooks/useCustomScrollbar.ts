@@ -28,17 +28,25 @@ export function useCustomScrollbar(deps: any[] = []) {
       const rect = container.getBoundingClientRect();
       setContainerRect(rect);
       setShowScrollbar(container.scrollWidth > container.clientWidth);
-      handleScroll(); // Initialize scroll percentage on mount/update
+      handleScroll();
     };
 
+    // Initial update
     updatePosition();
-    handleScroll(); // Call immediately on mount
+
+    // Watch for size changes
+    const resizeObserver = new ResizeObserver(() => {
+      updatePosition();
+    });
+
+    resizeObserver.observe(container);
 
     container.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", updatePosition);
     window.addEventListener("scroll", updatePosition, true);
 
     return () => {
+      resizeObserver.disconnect();
       container.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", updatePosition);
       window.removeEventListener("scroll", updatePosition, true);
@@ -62,6 +70,19 @@ export function useCustomScrollbar(deps: any[] = []) {
     },
     [isDragging]
   );
+
+  const handleScroll = (direction: "forward" | "back") => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    // Scroll by 80% of visible width (adjust percentage as needed)
+    const scrollAmount = container.clientWidth * 0.8;
+
+    container.scrollBy({
+      left: direction === "forward" ? scrollAmount : -scrollAmount,
+      behavior: "smooth",
+    });
+  };
 
   const handleThumbMouseDown = useCallback(
     (e: React.MouseEvent) => {
@@ -123,6 +144,7 @@ export function useCustomScrollbar(deps: any[] = []) {
     scrollPercentage,
     showScrollbar,
     handleScrollbarClick,
+    handleScroll,
     handleThumbMouseDown,
     getThumbWidth,
     containerRect,

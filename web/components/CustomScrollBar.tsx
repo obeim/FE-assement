@@ -46,8 +46,7 @@ export function CustomScrollbar({
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`h-full bg-white/20 rounded-full transition-all duration-200 bg-gradient-to-bl 
-            from-[#533E7D] to-[#6B4080]
+        className={`h-full bg-white/20 rounded-full transition-all duration-200 bg-background-scrollbar
           ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
         style={{
           width: `${thumbWidthPx}px`,

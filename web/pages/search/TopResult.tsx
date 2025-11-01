@@ -1,6 +1,6 @@
 import { Podcast } from "../../types/podcast";
 
-const TopResult = ({ topResult }: { topResult: Podcast }) => {
+const TopResult = ({ artworkUrl, trackName, artistName }: Podcast) => {
   return (
     <div className=" w-full ">
       <div className="flex gap-10 w-full pt-4 px-4 ">
@@ -8,15 +8,11 @@ const TopResult = ({ topResult }: { topResult: Podcast }) => {
           <img
             className="xl:w-[229px] xl:h-[229px] lg:w-[204px] lg:h-[204px] md:w-[120px] md:h-[120px] w-full h-full object-cover"
             alt="artwork Url"
-            src={topResult?.artworkUrl}
+            src={artworkUrl}
           />
           <div className="pt-2 pb-5 px-3">
-            <h2 className="text-white font-bold text-lg mt-4">
-              {topResult?.trackName}
-            </h2>
-            <p className="text-foreground text-sm mt-2 ">
-              {topResult?.artistName}
-            </p>
+            <h2 className="text-white font-bold text-lg mt-4">{trackName}</h2>
+            <p className="text-foreground text-sm mt-2 ">{artistName}</p>
           </div>
         </div>
       </div>

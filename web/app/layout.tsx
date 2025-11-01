@@ -1,10 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import SearchBar from "../components/SearchBar";
-import NavArrows from "../components/NavArrows";
 import ThreeDots from "../icons/ThreeDots";
 
 import Sidebar from "../components/Sidebar";
+import NavArrows from "../components/NavArrows";
 
 export const metadata: Metadata = {
   title: "Podcast Search",

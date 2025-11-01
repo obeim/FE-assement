@@ -5,6 +5,7 @@ export default {
     "./app/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./icons/**/*.{ts,tsx}",
+    "./pages/**/*.{ts,tsx}",
   ],
   theme: {
     extend: {
@@ -19,6 +20,7 @@ export default {
           input: "#16172780", // input backgrounds (with opacity)
           accent: "#23253d", // accent background (hover states, nav, etc.)
           sidebar: "#0000001a",
+          scrollbar: "#404080", // custom scrollbar background
         },
         foreground: {
           DEFAULT: "#ffffff", // main text color
