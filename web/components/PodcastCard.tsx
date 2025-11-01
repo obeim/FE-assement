@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Podcast } from "../types/podcast";
-import { memo, useCallback, useMemo } from "react";
+import { memo, useMemo } from "react";
 import DropdownMenu from "./DropdownMenu";
 import { cardSubtitlColors } from "../utils/constants";
 
@@ -21,8 +21,7 @@ function PodcastCard({ podcast }: { podcast: Podcast }) {
   return (
     <div
       className="rounded shadow-sm hover:shadow-md transition-all duration-300 ease-in-out
-                mx-auto relative
-                w-[25vw] sm:w-[20vw] max-w-[233px] md:w-[15vw] md:max-w-[150px] lg:w-[12vw] lg:max-w-[233px]"
+                mx-auto relative  w-full"
     >
       <Image
         src={podcast.artworkUrl}

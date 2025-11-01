@@ -67,18 +67,23 @@ const TopEpisodesSection = ({
 
           <CustomDropdownMenu
             options={[
-              { label: "Grid View", onClick: () => setLayout("grid") },
-              { label: "Scroll View", onClick: () => setLayout("scroll") },
-              { label: "Compact View", onClick: () => setLayout("compact") },
-              { label: "List View", onClick: () => setLayout("list") },
-            ]}
+              { label: "Grid View", value: "grid" },
+              { label: "Scroll View", value: "scroll" },
+              { label: "Compact View", value: "compact" },
+              { label: "List View", value: "list" },
+            ]
+              .filter((option) => option.value !== layout)
+              .map((option) => ({
+                label: option.label,
+                onClick: () => setLayout(option.value as Listinglayouts),
+              }))}
           />
         </div>
       </div>
 
       <div
         ref={scrollContainerRef}
-        className={`pr-4 pl-2 pt-1 no-scrollbar ${config?.containerClass}`}
+        className={` no-scrollbar ${config?.containerClass}`}
         style={layout === "scroll" ? { overflowY: "clip" } : {}}
       >
         {results.map((episode) => (

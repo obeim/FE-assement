@@ -8,6 +8,7 @@ import { Podcast } from "../../types/podcast";
 import PodcastCard from "../../components/PodcastCard";
 import { CustomScrollbar } from "../../components/CustomScrollBar";
 import usePersistentLayout from "../../hooks/usePersistentLayout";
+import { Skeleton } from "../../components/Skeleton";
 
 const TopPodcastsSection = ({
   initialTerm,
@@ -18,7 +19,7 @@ const TopPodcastsSection = ({
 }) => {
   const { term } = useSearchStore();
 
-  const { layout, setLayout } = usePersistentLayout(
+  const { layout, setLayout, isInitialized } = usePersistentLayout(
     "top_podcasts_layout",
     "scroll"
   );
@@ -69,8 +70,8 @@ const TopPodcastsSection = ({
         ref={scrollContainerRef}
         className={`pr-4 pl-2 pt-4 no-scrollbar ${
           layout === "grid"
-            ? "grid gap-6 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-6 w-full"
-            : "flex gap-6 overflow-x-auto"
+            ? "grid gap-6 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 2xl:grid-cols-6 w-full"
+            : "flex gap-1 sm:gap-6 overflow-x-auto"
         }`}
         style={layout === "scroll" ? { overflowY: "clip" } : {}}
       >
@@ -81,7 +82,11 @@ const TopPodcastsSection = ({
               layout === "scroll" ? "flex-shrink-0 w-[233px]" : "mx-auto w-full"
             }`}
           >
-            <PodcastCard podcast={pod} />
+            {isInitialized ? (
+              <PodcastCard podcast={pod} />
+            ) : (
+              <Skeleton className="w-[233px] h-[233px]" />
+            )}
           </div>
         ))}
       </div>

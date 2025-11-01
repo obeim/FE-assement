@@ -48,6 +48,8 @@ export default function SearchPageClient({
             : "Type something to search"}
         </p>
       )}
+
+      <div className=" h-10"></div>
     </div>
   );
 }

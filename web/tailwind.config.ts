@@ -6,6 +6,7 @@ export default {
     "./components/**/*.{ts,tsx}",
     "./icons/**/*.{ts,tsx}",
     "./pages/**/*.{ts,tsx}",
+    "./utils/**/*.{ts,tsx}",
   ],
   theme: {
     extend: {

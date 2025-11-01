@@ -9,7 +9,7 @@ interface DropdownOption {
 
 interface DropdownMenuProps {
   options: DropdownOption[];
-  className?: string;
+  className?: { container?: string; threeDots?: string };
 }
 
 export default function CustomDropdownMenu({
@@ -20,9 +20,11 @@ export default function CustomDropdownMenu({
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <button
-          className={`p-2 rounded-full outline-none transition ${className}`}
+          className={`p-2 rounded-full outline-none transition ${className?.container}`}
         >
-          <ThreeDots className="fill-white/40 hover:fill-white cursor-pointer h-5" />
+          <ThreeDots
+            className={`fill-white/40 hover:fill-white cursor-pointer h-7 ${className?.threeDots}`}
+          />
         </button>
       </DropdownMenu.Trigger>
 

@@ -2,19 +2,26 @@ import { useEffect, useState } from "react";
 import { Listinglayouts } from "../types/podcast";
 
 const usePersistentLayout = (key: string, defaultLayout: Listinglayouts) => {
-  const [layout, setLayout] = useState<Listinglayouts>();
+  const [layout, setLayout] = useState<Listinglayouts>(defaultLayout);
+  const [isInitialized, setIsInitialized] = useState(false);
 
+  // Load from localStorage on mount
   useEffect(() => {
-    setLayout((localStorage.getItem(key) as Listinglayouts) || defaultLayout);
-  }, [key, defaultLayout]);
+    const savedLayout = localStorage.getItem(key) as Listinglayouts;
+    if (savedLayout) {
+      setLayout(savedLayout);
+    }
+    setIsInitialized(true);
+  }, [key]);
 
-  return {
-    layout,
-    setLayout: (value: Listinglayouts) => {
-      setLayout(value);
-      localStorage.setItem(key, value);
-    },
-  };
+  // Save to localStorage whenever layout changes (after initialization)
+  useEffect(() => {
+    if (isInitialized) {
+      localStorage.setItem(key, layout);
+    }
+  }, [layout, key, isInitialized]);
+
+  return { layout, setLayout, isInitialized };
 };
 
 export default usePersistentLayout;
