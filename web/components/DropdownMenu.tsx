@@ -4,7 +4,7 @@ import ThreeDots from "../icons/ThreeDots";
 
 interface DropdownOption {
   label: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 interface DropdownMenuProps {
@@ -20,7 +20,7 @@ export default function CustomDropdownMenu({
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <button
-          className={`p-2 rounded-full outline-none transition ${className?.container}`}
+          className={`py-1 px-2 rounded-full outline-none transition ${className?.container}`}
         >
           <ThreeDots
             className={`fill-white/40 hover:fill-white cursor-pointer h-7 ${className?.threeDots}`}
@@ -30,7 +30,7 @@ export default function CustomDropdownMenu({
 
       <DropdownMenu.Portal>
         <DropdownMenu.Content
-          className="w-52 rounded shadow-lg z-[9999]
+          className="w-48 rounded shadow-lg z-[9999]
             bg-gradient-to-tr from-[#404080] to-[#6B4080]
             animate-in fade-in-0 zoom-in-95 data-[side=bottom]:slide-in-from-top-2"
           sideOffset={8}
@@ -43,11 +43,11 @@ export default function CustomDropdownMenu({
             height={5}
           />
 
-          <div className="p-1">
+          <div className="py-1 px-2">
             {options.map((option, i) => (
               <div key={i}>
                 <DropdownMenu.Item
-                  className="block w-full text-left p-2 text-[14px] text-gray-200 
+                  className="block w-full text-left px-2 py-[6px] text-[14px] text-gray-200 
                     hover:bg-background-accent/30 rounded-md transition outline-none cursor-pointer"
                   onSelect={option.onClick}
                 >

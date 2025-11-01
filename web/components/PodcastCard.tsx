@@ -35,7 +35,10 @@ function PodcastCard({ podcast }: { podcast: Podcast }) {
         <DropdownMenu
           options={[
             { label: "Add to My Podcasts", onClick() {} },
-            { label: "Add to My Podcasts", onClick() {} },
+            { label: "Go to Podcast", onClick() {} },
+            { label: "Share Podcast", onClick() {} },
+            { label: "Hide Podcast", onClick() {} },
+
           ]}
         />
       </div>

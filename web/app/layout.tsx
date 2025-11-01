@@ -1,10 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import SearchBar from "../components/SearchBar";
-import ThreeDots from "../icons/ThreeDots";
 
 import Sidebar from "../components/Sidebar";
 import NavArrows from "../components/NavArrows";
+import CustomDropdownMenu from "../components/DropdownMenu";
 
 export const metadata: Metadata = {
   title: "Podcast Search",
@@ -33,7 +33,19 @@ export default function RootLayout({
               <button className="btn-gradient  py-1 flex-1">Sign up</button>
             </div>
             <span>
-              <ThreeDots className="h-full fill-white/70 hover:fill-white cursor-pointer" />
+              <CustomDropdownMenu
+                options={[
+                  { label: "Settings" },
+                  { label: "Recents" },
+                  { label: "About Podbay" },
+                  { label: "What's New" },
+                  { label: "Podcaster FAQ" },
+                  { label: "Privacy" },
+                  { label: "Terms" },
+                  { label: "Contact & Feedback" },
+                  { label: "Clear Data..." },
+                ]}
+              />
             </span>
           </div>
 
