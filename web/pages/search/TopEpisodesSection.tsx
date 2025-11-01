@@ -1,15 +1,28 @@
 "use client";
 
 import Arrows from "../../components/Arrows";
-import CustomDropdownMenu from "../../components/DropdownMenu";
-import { useCustomScrollbar } from "../../hooks/useCustomScrollbar";
-import { useSearchStore } from "../../store/searchStore";
-import { Podcast } from "../../types/podcast";
-import PodcastCard from "../../components/PodcastCard";
 import { CustomScrollbar } from "../../components/CustomScrollBar";
-import usePersistentLayout from "../../hooks/usePersistentLayout";
+import CustomDropdownMenu from "../../components/DropdownMenu";
+import {
+  EpisodeCard,
+  EpisodeCardCompact,
+  EpisodeCardList,
+} from "../../components/EpisodeCards";
 
-const TopPodcastsSection = ({
+import { useCustomScrollbar } from "../../hooks/useCustomScrollbar";
+import usePersistentLayout from "../../hooks/usePersistentLayout";
+import { useSearchStore } from "../../store/searchStore";
+import { Listinglayouts, Podcast } from "../../types/podcast";
+import { getEpisodeLayoutConfig } from "../../utils/episodeLayoutConfig";
+
+const EPISODE_CARD_COMPONENTS = {
+  grid: EpisodeCard,
+  scroll: EpisodeCard,
+  compact: EpisodeCardCompact,
+  list: EpisodeCardList,
+} as const;
+
+const TopEpisodesSection = ({
   initialTerm,
   results,
 }: {
@@ -17,10 +30,9 @@ const TopPodcastsSection = ({
   results: Podcast[];
 }) => {
   const { term } = useSearchStore();
-
   const { layout, setLayout } = usePersistentLayout(
-    "top_podcasts_layout",
-    "scroll"
+    "top_episodes_layout",
+    "compact"
   );
 
   const {
@@ -35,11 +47,15 @@ const TopPodcastsSection = ({
     isDragging,
   } = useCustomScrollbar([results, layout]);
 
+  const config = getEpisodeLayoutConfig(layout as Listinglayouts);
+  const CardComponent =
+    EPISODE_CARD_COMPONENTS[(layout as Listinglayouts) || "compact"];
+
   return (
     <section>
-      <div className="flex justify-between items-center w-full px-4 pt-5 pb-3  md:sticky snap-start z-20 bg-background/90 border-b border-white/10 top-10 ">
+      <div className="flex justify-between items-center w-full px-4 pt-5 pb-3 md:sticky snap-start z-20 bg-background/90 border-b border-white/10 top-10">
         <h1 className="text-white font-semibold text-[16px]">
-          Top podcasts for {term || initialTerm}
+          Top episodes for {term || initialTerm}
         </h1>
         <div className="inline-flex gap-3 items-center justify-center">
           {layout === "scroll" && (
@@ -51,15 +67,10 @@ const TopPodcastsSection = ({
 
           <CustomDropdownMenu
             options={[
-              {
-                label:
-                  layout === "grid"
-                    ? "Switch Layout to Scroll"
-                    : "Switch Layout to Grid",
-                onClick() {
-                  setLayout(layout === "grid" ? "scroll" : "grid");
-                },
-              },
+              { label: "Grid View", onClick: () => setLayout("grid") },
+              { label: "Scroll View", onClick: () => setLayout("scroll") },
+              { label: "Compact View", onClick: () => setLayout("compact") },
+              { label: "List View", onClick: () => setLayout("list") },
             ]}
           />
         </div>
@@ -67,26 +78,17 @@ const TopPodcastsSection = ({
 
       <div
         ref={scrollContainerRef}
-        className={`pr-4 pl-2 pt-4 no-scrollbar ${
-          layout === "grid"
-            ? "grid gap-6 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-6 w-full"
-            : "flex gap-6 overflow-x-auto"
-        }`}
+        className={`pr-4 pl-2 pt-1 no-scrollbar ${config?.containerClass}`}
         style={layout === "scroll" ? { overflowY: "clip" } : {}}
       >
-        {results.map((pod) => (
-          <div
-            key={pod.trackId}
-            className={`relative ${
-              layout === "scroll" ? "flex-shrink-0 w-[233px]" : "mx-auto w-full"
-            }`}
-          >
-            <PodcastCard podcast={pod} />
+        {results.map((episode) => (
+          <div key={episode.trackId} className={config?.cardWrapperClass}>
+            <CardComponent episode={episode} />
           </div>
         ))}
       </div>
 
-      {layout === "scroll" && showScrollbar && (
+      {config?.needsScrollbar && showScrollbar && (
         <CustomScrollbar
           scrollPercentage={scrollPercentage}
           thumbWidth={getThumbWidth()}
@@ -100,4 +102,4 @@ const TopPodcastsSection = ({
   );
 };
 
-export default TopPodcastsSection;
+export default TopEpisodesSection;

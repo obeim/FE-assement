@@ -2,16 +2,9 @@ import Image from "next/image";
 import { Podcast } from "../types/podcast";
 import { memo, useCallback, useMemo } from "react";
 import DropdownMenu from "./DropdownMenu";
+import { cardSubtitlColors } from "../utils/constants";
 
 function PodcastCard({ podcast }: { podcast: Podcast }) {
-  const subtitlColors = [
-    "#CF8163",
-    "#E86491",
-    "#FF78C9",
-    "#E3BD71",
-    "#6DC086",
-    "#7B7BF0",
-  ];
   const subtitleColor = useMemo(() => {
     const index =
       Math.abs(
@@ -21,8 +14,8 @@ function PodcastCard({ podcast }: { podcast: Podcast }) {
           .reduce((acc, char) => {
             return acc + char.charCodeAt(0);
           }, 0)
-      ) % subtitlColors.length;
-    return subtitlColors[index];
+      ) % cardSubtitlColors.length;
+    return cardSubtitlColors[index];
   }, [podcast.trackId]);
 
   return (

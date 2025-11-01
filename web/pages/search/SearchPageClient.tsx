@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useSearchStore } from "../../store/searchStore";
 import { searchPodcasts } from "../../utils/api";
 import { Podcast } from "../../types/podcast";
 import Loading from "../../app/search/loading";
 import TopPodcastsSection from "./TopPodcastsSection";
+import usePersistentLayout from "../../hooks/usePersistentLayout";
+import TopEpisodesSection from "./TopEpisodesSection";
 
 export default function SearchPageClient({
   initialTerm,
@@ -35,9 +37,10 @@ export default function SearchPageClient({
       {loading ? (
         <Loading />
       ) : results.length > 0 ? (
-        <>
+        <Fragment>
           <TopPodcastsSection results={results} initialTerm={initialTerm} />
-        </>
+          <TopEpisodesSection results={results} initialTerm={initialTerm} />
+        </Fragment>
       ) : (
         <p className="text-center text-white/70 py-10">
           {term || initialTerm

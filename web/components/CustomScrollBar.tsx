@@ -34,7 +34,7 @@ export function CustomScrollbar({
 
   return createPortal(
     <div
-      className="fixed bg-white/5 rounded-full cursor-pointer z-50 transition-all duration-200"
+      className="fixed bg-white/5 rounded-full cursor-pointer z-50  "
       style={{
         left: `${containerRect.left}px`,
         top: `${containerRect.bottom + 16}px`,
@@ -46,7 +46,7 @@ export function CustomScrollbar({
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`h-full rounded-full transition-all duration-200 bg-background-scrollbar ${
+        className={`h-full rounded-full bg-background-scrollbar ${
           isDragging ? "cursor-grabbing" : "cursor-grab"
         }`}
         style={{
