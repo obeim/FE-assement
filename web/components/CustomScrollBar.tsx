@@ -39,15 +39,16 @@ export function CustomScrollbar({
         left: `${containerRect.left}px`,
         top: `${containerRect.bottom + 16}px`,
         width: `${trackWidth}px`,
-        height: isHovered || isDragging ? "8px" : "4px", // Smaller when not hovered
+        height: isHovered || isDragging ? "8px" : "2px", // Smaller when not hovered
       }}
       onClick={onScrollbarClick}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        className={`h-full bg-white/20 rounded-full transition-all duration-200 bg-background-scrollbar
-          ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
+        className={`h-full rounded-full transition-all duration-200 bg-background-scrollbar ${
+          isDragging ? "cursor-grabbing" : "cursor-grab"
+        }`}
         style={{
           width: `${thumbWidthPx}px`,
           transform: `translateX(${translateXPx}px)`,

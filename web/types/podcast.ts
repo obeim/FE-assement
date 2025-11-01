@@ -4,3 +4,4 @@ export interface Podcast {
   artistName: string;
   artworkUrl: string;
 }
+export type Listinglayouts = "scroll" | "grid" | "compact" | "list";
