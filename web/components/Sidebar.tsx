@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Home from "../components/icons/Home";
-import Discover from "../components/icons/Discover";
+import Home from "../icons/Home";
+import Discover from "../icons/Discover";
 import { useState } from "react";
 
 const sideLinks = [

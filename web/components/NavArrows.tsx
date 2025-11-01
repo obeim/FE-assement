@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Arrow from "./icons/Arrow";
+import Arrow from "../icons/Arrow";
 
 const NavArrows = () => {
   const router = useRouter();

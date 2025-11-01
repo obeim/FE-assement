@@ -2,7 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import SearchBar from "../components/SearchBar";
 import NavArrows from "../components/NavArrows";
-import ThreeDots from "../components/icons/ThreeDots";
+import ThreeDots from "../icons/ThreeDots";
 
 import Sidebar from "../components/Sidebar";
 
@@ -38,7 +38,9 @@ export default function RootLayout({
           </div>
 
           {/* Page content */}
-          <main className="flex-1  py-6">{children}</main>
+          <main className="flex-1  py-6 w-[calc(100vw-20px)] md:max-w-[calc(100vw-250px)]">
+            {children}
+          </main>
         </div>
       </body>
     </html>
