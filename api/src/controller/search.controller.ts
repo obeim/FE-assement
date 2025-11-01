@@ -29,12 +29,8 @@ class SearchController {
     try {
       data = await searchItunes(term);
     } catch (err: any) {
-      const msg =
-        err?.response?.data?.message ||
-        err?.message ||
-        "Upstream search failed";
       this.fastify.log.error(err.message, "iTunes search failed");
-      return reply.status(502).send({ message: msg });
+      return reply.status(502).send({ message: "iTunes search failed" });
     }
 
     const podcastsData = data.map((item) => ({
