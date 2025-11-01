@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Arrows from "../../components/Arrows";
 import CustomDropdownMenu from "../../components/DropdownMenu";
 import { useCustomScrollbar } from "../../hooks/useCustomScrollbar";
 import { useSearchStore } from "../../store/searchStore";
-import { Listinglayouts, Podcast } from "../../types/podcast";
+import { Podcast } from "../../types/podcast";
 import PodcastCard from "../../components/PodcastCard";
 import { CustomScrollbar } from "../../components/CustomScrollBar";
+import usePersistentLayout from "../../hooks/usePersistentLayout";
 
 const TopPodcastsSection = ({
   initialTerm,
@@ -18,14 +18,10 @@ const TopPodcastsSection = ({
 }) => {
   const { term } = useSearchStore();
 
-  const [layout, setLayout] = useState<Listinglayouts>();
-
-  useEffect(() => {
-    setLayout(
-      (localStorage.getItem("top_podcasts_layout") as Listinglayouts) ||
-        "scroll"
-    );
-  }, []);
+  const { layout, setLayout } = usePersistentLayout(
+    "top_podcasts_layout",
+    "scroll"
+  );
 
   const {
     scrollContainerRef,
@@ -37,7 +33,7 @@ const TopPodcastsSection = ({
     handleScroll,
     containerRect,
     isDragging,
-  } = useCustomScrollbar([results]);
+  } = useCustomScrollbar([results, layout]);
 
   return (
     <section>
@@ -48,12 +44,8 @@ const TopPodcastsSection = ({
         <div className="inline-flex gap-3 items-center justify-center">
           {layout === "scroll" && (
             <Arrows
-              forward={() => {
-                handleScroll("forward");
-              }}
-              back={() => {
-                handleScroll("back");
-              }}
+              forward={() => handleScroll("forward")}
+              back={() => handleScroll("back")}
             />
           )}
 
@@ -66,10 +58,6 @@ const TopPodcastsSection = ({
                     : "Switch Layout to Grid",
                 onClick() {
                   setLayout(layout === "grid" ? "scroll" : "grid");
-                  localStorage.setItem(
-                    "top_podcasts_layout",
-                    layout === "grid" ? "scroll" : "grid"
-                  );
                 },
               },
             ]}
@@ -79,29 +67,35 @@ const TopPodcastsSection = ({
 
       <div
         ref={scrollContainerRef}
-        className={`pr-4 pl-2 pt-4 no-scrollbar overflow-x-scroll w-full max-w-full grid ${
+        className={`pr-4 pl-2 pt-4 no-scrollbar ${
           layout === "grid"
-            ? " gap-6 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-6"
-            : "grid-flow-col gap-6"
-        } `}
+            ? "grid gap-6 grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 2xl:grid-cols-6 w-full"
+            : "flex gap-6 overflow-x-auto"
+        }`}
+        style={layout === "scroll" ? { overflowY: "clip" } : {}}
       >
         {results.map((pod) => (
-          <div key={pod.trackId} className="mx-auto w-full relative">
+          <div
+            key={pod.trackId}
+            className={`relative ${
+              layout === "scroll" ? "flex-shrink-0 w-[233px]" : "mx-auto w-full"
+            }`}
+          >
             <PodcastCard podcast={pod} />
           </div>
         ))}
-
-        {layout === "scroll" && showScrollbar && (
-          <CustomScrollbar
-            scrollPercentage={scrollPercentage}
-            thumbWidth={getThumbWidth()}
-            onScrollbarClick={handleScrollbarClick}
-            onThumbMouseDown={handleThumbMouseDown}
-            containerRect={containerRect}
-            isDragging={isDragging}
-          />
-        )}
       </div>
+
+      {layout === "scroll" && showScrollbar && (
+        <CustomScrollbar
+          scrollPercentage={scrollPercentage}
+          thumbWidth={getThumbWidth()}
+          onScrollbarClick={handleScrollbarClick}
+          onThumbMouseDown={handleThumbMouseDown}
+          containerRect={containerRect}
+          isDragging={isDragging}
+        />
+      )}
     </section>
   );
 };
