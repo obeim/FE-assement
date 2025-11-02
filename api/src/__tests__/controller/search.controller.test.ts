@@ -1,9 +1,9 @@
-import { beforeEach, describe, expect, MockedFunction, test, vi } from "vitest";
-import SearchController from "./search.controller";
-import { searchItunes } from "../services/itunes.service";
+import { beforeEach, describe, expect, test, vi } from "vitest";
+import SearchController from "../../controller/search.controller";
 import { Podcast } from "@prisma/client";
+import { searchItunes } from "../../services/itunes.service";
 
-vi.mock("../services/itunes.service.ts", () => ({
+vi.mock("../../services/itunes.service", () => ({
   searchItunes: vi.fn(),
 }));
 
@@ -118,7 +118,7 @@ describe("Search controller", () => {
     ).resolves.toEqual([]);
   });
 
-  test("should transform and saves itunes data correctly", async () => {
+  test("should transform itunes data correctly", async () => {
     const mockRequest = { query: { term: "test" } };
     const mockReply = {};
     const podcastsData = mockItunesReturnValue.map((item) => ({

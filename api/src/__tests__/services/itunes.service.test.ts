@@ -1,5 +1,5 @@
 import { describe, test, vi, expect, beforeEach } from "vitest";
-import { searchItunes } from "./itunes.service";
+import { searchItunes } from "../../services/itunes.service";
 
 const mocks = vi.hoisted(() => ({
   get: vi.fn(),
