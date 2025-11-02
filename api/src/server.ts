@@ -4,7 +4,7 @@ import searchRoutes from "./routes/search";
 import fastifyCors from "@fastify/cors";
 
 const setupServer = async () => {
-  const server = Fastify({ logger: true });
+  const server = Fastify();
 
   server.register(fastifyCors);
 

@@ -1,0 +1,68 @@
+name: Deploy FE-assement
+
+on:
+    push:
+        branches: [main]
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        environment: prod
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Use latest Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "node"
+
+            - run: npm install
+            - run: npm run build --if-present
+
+            - name: Deploy to VPS via SSH
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.HOST }}
+                  username: ${{ secrets.USERNAME }}
+                  key: ${{ secrets.PRIVATE_KEY }}
+                  port: 22
+                  script: |
+                      cd ~/FE-assement
+
+                      # Pull latest code
+                      git fetch origin main
+                      git reset --hard origin/main
+
+                      # --------- Backend ---------
+                      cd api
+                      npm install --frozen-lockfile
+                      npm run build --if-present
+                      npx prisma generate
+                      npx prisma migrate deploy
+
+                      # Start backend with PM2
+                      if command -v pm2 >/dev/null 2>&1; then
+                        pm2 restart podcast-api || pm2 start npm --name "podcast-api" -- run start
+                      else
+                        nohup npm run start > ../api.out.log 2>&1 &
+                      fi
+
+                      cd ..
+
+                      # --------- Frontend ---------
+                      cd web
+                      npm install --frozen-lockfile
+                      npm run build --if-present
+
+                      # Start frontend with PM2 (if SSR/Node FE)
+                      if command -v pm2 >/dev/null 2>&1; then
+                        pm2 restart frontend || pm2 start npm --name "frontend" -- run start
+                      else
+                        nohup npm run start > ../web.out.log 2>&1 &
+                      fi
+
+                      # Save PM2 process list
+                      if command -v pm2 >/dev/null 2>&1; then
+                        pm2 save
+                      fi
