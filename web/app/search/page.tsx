@@ -17,12 +17,13 @@ export default async function SearchPage({ searchParams }: Props) {
 
   const initialResults: { success: boolean; data: Podcast[] } = q
     ? await searchPodcasts(q as string)
-    : { success: false, data: [] };
+    : { success: true, data: [] };
 
   return (
     <SearchPageClient
       initialTerm={(q as string) || ""}
       initialResults={initialResults.data}
+      success={initialResults.success}
     />
   );
 }
