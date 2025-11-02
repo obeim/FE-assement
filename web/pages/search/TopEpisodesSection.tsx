@@ -53,7 +53,7 @@ const TopEpisodesSection = ({
 
   return (
     <section>
-      <div className="flex justify-between items-center w-full px-4 pt-5 pb-3 md:sticky snap-start z-20 bg-background/90 border-b border-white/10 top-10">
+      <div className="flex justify-between items-center w-full px-4 pt-5 pb-3 md:sticky snap-start z-20 bg-background/90 border-b border-white/10 lg:top-[55px] top-[52px]">
         <h1 className="text-white font-semibold text-[16px]">
           Top episodes for {term || initialTerm}
         </h1>

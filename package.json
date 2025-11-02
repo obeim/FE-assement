@@ -7,6 +7,12 @@
     "dev:web": "cd web && npm run dev",
     "dev:api": "cd api && npm run dev",
     "dev": "concurrently \"npm run dev:api\" \"npm run dev:web\"",
+    "start:web": "cd web && npm run start",
+    "start:api": "cd api && npm run start",
+    "start": "concurrently \"npm run start:api\" \"npm run start:web\"",
+    "build:web": "cd web && npm run build",
+    "build:api": "cd api && npm run build",
+    "build": "concurrently \"npm run build:api\" \"npm run build:web\"",
     "test:api": "cd api && pnpm test"
   },
   "keywords": [],

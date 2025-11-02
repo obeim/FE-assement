@@ -43,7 +43,7 @@ export default function CustomDropdownMenu({
             height={5}
           />
 
-          <div className="py-1 px-2">
+          <div className="py-2 px-2">
             {options.map((option, i) => (
               <div key={i}>
                 <DropdownMenu.Item

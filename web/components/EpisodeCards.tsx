@@ -158,13 +158,13 @@ export const EpisodeCardList = ({ episode }: cardProps) => {
   }, [episode.trackId]);
 
   return (
-    <div className="flex gap-4 p-3 rounded hover:bg-white/5 transition-colors border-b border-white/5 group">
+    <div className="flex gap-4 p-3 rounded hover:bg-black/40 transition-colors border-b border-white/5 group cursor-pointer">
       <Image
         src={episode.artworkUrl}
         alt={episode.trackName}
         width={100}
         height={100}
-        className="rounded flex-shrink-0"
+        className="rounded flex-shrink-0 md:w-[100px] md:h-[100px] w-14 h-14"
       />
       <div className="flex-1 min-w-0">
         <h3 className="font-semibold text-white text-base ">
@@ -176,11 +176,7 @@ export const EpisodeCardList = ({ episode }: cardProps) => {
         >
           {episode.artistName}
         </p>
-        <p className="text-[14px] line-clamp-2 text-ellipsis">
-          لوريم ايبسوم دولار سيت أميت ,كونسيكتيتور أدايبا يسكينج أليايت,سيت دو
-          أيوسمود تيمبور أنكايديديونتيوت لابوري ات دولار ماجنا .
-        </p>
-        <div className="flex items-center gap-2 text-[12px] text-[#cfd0d3] font-medium mt-1">
+        <div className="flex items-center gap-2 text-[12px] text-[#cfd0d3] font-medium mt-5">
           <span>Feb 6</span>
           <span>31min</span>
         </div>

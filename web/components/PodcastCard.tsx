@@ -21,7 +21,7 @@ function PodcastCard({ podcast }: { podcast: Podcast }) {
   return (
     <div
       className="rounded shadow-sm hover:shadow-md transition-all duration-300 ease-in-out
-                mx-auto relative  w-full"
+                mx-auto relative  md:w-full w-[90%]"
     >
       <Image
         src={podcast.artworkUrl}
@@ -38,7 +38,6 @@ function PodcastCard({ podcast }: { podcast: Podcast }) {
             { label: "Go to Podcast", onClick() {} },
             { label: "Share Podcast", onClick() {} },
             { label: "Hide Podcast", onClick() {} },
-
           ]}
         />
       </div>
