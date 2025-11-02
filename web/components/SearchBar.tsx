@@ -3,7 +3,7 @@
 import { debounce } from "../utils/helpers";
 import { useRef } from "react";
 import { useSearchStore } from "../store/searchStore";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 export default function SearchBar() {
   const { setTerm } = useSearchStore();

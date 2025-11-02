@@ -5,6 +5,8 @@ import SearchBar from "../components/SearchBar";
 import Sidebar from "../components/Sidebar";
 import NavArrows from "../components/NavArrows";
 import CustomDropdownMenu from "../components/DropdownMenu";
+import { Suspense } from "react";
+import { Skeleton } from "../components/Skeleton";
 
 export const metadata: Metadata = {
   title: "Podcast Search",
@@ -27,7 +29,13 @@ export default function RootLayout({
           {/* Header */}
           <div className="flex gap-3 py-2 px-4 items-center sticky z-20 bg-background top-0">
             <NavArrows />
-            <SearchBar />
+            <Suspense
+              fallback={
+                <Skeleton className="xl:w-[90%] md:w-[70%] w-full rounded-[10px] py-1 h-8 " />
+              }
+            >
+              <SearchBar />
+            </Suspense>
             <div className="md:flex hidden gap-2 text-[13px] ml-auto md:!w-[168px] items-center">
               <button className="btn-gradient py-1 flex-1">Log in</button>
               <button className="btn-gradient  py-1 flex-1">Sign up</button>

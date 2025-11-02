@@ -11,7 +11,7 @@ import TopEpisodesSection from "./TopEpisodesSection";
 
 export default function SearchPageClient({
   initialTerm,
-  initialResults,
+  initialResults = [],
 }: {
   initialTerm: string;
   initialResults: Podcast[];

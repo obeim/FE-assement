@@ -24,7 +24,7 @@ const EPISODE_CARD_COMPONENTS = {
 
 const TopEpisodesSection = ({
   initialTerm,
-  results,
+  results = [],
 }: {
   initialTerm: string;
   results: Podcast[];

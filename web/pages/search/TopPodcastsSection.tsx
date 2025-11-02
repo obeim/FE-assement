@@ -12,7 +12,7 @@ import { Skeleton } from "../../components/Skeleton";
 
 const TopPodcastsSection = ({
   initialTerm,
-  results,
+  results = [],
 }: {
   initialTerm: string;
   results: Podcast[];
@@ -75,7 +75,7 @@ const TopPodcastsSection = ({
         }`}
         style={layout === "scroll" ? { overflowY: "clip" } : {}}
       >
-        {results.map((pod) => (
+        {(results || []).map((pod) => (
           <div
             key={pod.trackId}
             className={`relative ${

@@ -3,21 +3,28 @@ import { Podcast } from "../../types/podcast";
 import { searchPodcasts } from "../../utils/api";
 import SearchPageClient from "../../pages/search/SearchPageClient";
 
-export default async function SearchPage({
-  searchParams,
-}: {
-  searchParams: { q?: string };
-}) {
+type SearchParams = {
+  q?: string;
+};
+
+type Props = {
+  params: Promise<{}>;
+  searchParams: Promise<SearchParams>;
+};
+
+export default async function SearchPage({ searchParams }: Props) {
   const { q } = await searchParams;
 
   const initialResults: { success: boolean; data: Podcast[] } = q
-    ? await searchPodcasts(q)
+    ? await searchPodcasts(q as string)
     : { success: false, data: [] };
 
   return (
     <SearchPageClient
-      initialTerm={q || ""}
+      initialTerm={(q as string) || ""}
       initialResults={initialResults.data}
     />
   );
 }
+
+export const dynamic = "force-dynamic";
