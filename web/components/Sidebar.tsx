@@ -21,39 +21,25 @@ const Sidebar = () => {
       fixed top-0 left-0 
       border-r border-r-border-subtle 
       bg-background-sidebar 
-      px-4 py-6
+      px-4 py-4
       md:flex flex-col
       z-20
     "
     >
       <Link href="/" className="flex items-center ">
-        <img alt="logo" className="w-12 h-12" src="logo.svg" />
+        <img alt="logo" className="w-[45px] h-[49.45]" src="logo.svg" />
       </Link>
 
-      <div className="flex flex-col text-white font-semibold mt-12 text-sm gap-4">
+      <div className="flex flex-col text-white font-semibold mt-[38px] text-sm gap-4">
         {sideLinks.map((item, index) => {
-          const Icon = item.icon;
           return (
-            <span
+            <SidebarItem
               key={index}
-              className="flex items-center gap-3 relative cursor-pointer"
-              style={{
-                color: (index === activelink && item.activeColor) || "",
-              }}
+              item={item}
+              index={index}
+              activeItem={activelink}
               onClick={() => setActiveLink(index)}
-            >
-              <span
-                className="absolute left-0 w-full h-[200%] "
-                style={{
-                  background:
-                    (index === activelink &&
-                      `radial-gradient(50% 25% at 0% 50%, ${item.activeColor}33 0%, rgba(19, 241, 255, 0) 100%)`) ||
-                    "",
-                }}
-              ></span>
-              <Icon active={index === activelink} />
-              {item.title}
-            </span>
+            />
           );
         })}
       </div>
@@ -62,3 +48,40 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
+function SidebarItem({
+  item,
+  activeItem,
+  index,
+  onClick,
+}: {
+  item: (typeof sideLinks)[0];
+  onClick: () => void;
+  activeItem: number | undefined;
+  index: number;
+}) {
+  const Icon = item.icon;
+
+  return (
+    <span
+      key={index}
+      className="flex items-center gap-[10px] relative cursor-pointer text-[14px] px-1"
+      style={{
+        color: (index === activeItem && item.activeColor) || "",
+      }}
+      onClick={onClick}
+    >
+      <span
+        className="absolute left-0 w-full h-[200%] "
+        style={{
+          background:
+            (index === activeItem &&
+              `radial-gradient(50% 25% at 0% 50%, ${item.activeColor}33 0%, rgba(19, 241, 255, 0) 100%)`) ||
+            "",
+        }}
+      ></span>
+      <Icon active={index === activeItem} />
+      {item.title}
+    </span>
+  );
+}
