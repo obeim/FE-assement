@@ -41,7 +41,6 @@ export default function SearchPageClient({
   return (
     <div className="space-y-4">
       {loading && <Loading />}
-      {}
       {!error && !loading && (
         <Fragment>
           {results.length > 0 && (

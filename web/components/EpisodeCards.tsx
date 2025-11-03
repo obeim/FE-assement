@@ -4,6 +4,7 @@ import CustomDropdownMenu from "./DropdownMenu";
 import { useMemo } from "react";
 import { cardSubtitlColors } from "../utils/constants";
 import Play from "../icons/Play";
+import { pickHashedColor } from "../utils/helpers";
 
 interface cardProps {
   episode: Podcast;
@@ -17,29 +18,11 @@ export const EpisodeCard = ({ episode }: cardProps) => {
   ];
 
   const pickbgColor = useMemo(() => {
-    const index =
-      Math.abs(
-        episode.trackId
-          .toString()
-          .split("")
-          .reduce((acc, char) => {
-            return acc + char.charCodeAt(0);
-          }, 0)
-      ) % bgColors.length;
-    return bgColors[index];
+    return pickHashedColor(episode.trackId, bgColors);
   }, [episode.trackId]);
 
   const subtitleColor = useMemo(() => {
-    const index =
-      Math.abs(
-        episode.trackId
-          .toString()
-          .split("")
-          .reduce((acc, char) => {
-            return acc + char.charCodeAt(0);
-          }, 0)
-      ) % cardSubtitlColors.length;
-    return cardSubtitlColors[index];
+    return pickHashedColor(episode.trackId, cardSubtitlColors);
   }, [episode.trackId]);
 
   return (
@@ -98,16 +81,7 @@ export const EpisodeCard = ({ episode }: cardProps) => {
 
 export const EpisodeCardCompact = ({ episode }: cardProps) => {
   const subtitleColor = useMemo(() => {
-    const index =
-      Math.abs(
-        episode.trackId
-          .toString()
-          .split("")
-          .reduce((acc, char) => {
-            return acc + char.charCodeAt(0);
-          }, 0)
-      ) % cardSubtitlColors.length;
-    return cardSubtitlColors[index];
+    return pickHashedColor(episode.trackId, cardSubtitlColors);
   }, [episode.trackId]);
 
   return (
@@ -145,16 +119,7 @@ export const EpisodeCardCompact = ({ episode }: cardProps) => {
 
 export const EpisodeCardList = ({ episode }: cardProps) => {
   const subtitleColor = useMemo(() => {
-    const index =
-      Math.abs(
-        episode.trackId
-          .toString()
-          .split("")
-          .reduce((acc, char) => {
-            return acc + char.charCodeAt(0);
-          }, 0)
-      ) % cardSubtitlColors.length;
-    return cardSubtitlColors[index];
+    return pickHashedColor(episode.trackId, cardSubtitlColors);
   }, [episode.trackId]);
 
   return (
