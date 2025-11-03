@@ -3,19 +3,11 @@ import { Podcast } from "../types/podcast";
 import { memo, useMemo } from "react";
 import DropdownMenu from "./DropdownMenu";
 import { cardSubtitlColors } from "../utils/constants";
+import { pickHashedColor } from "../utils/helpers";
 
 function PodcastCard({ podcast }: { podcast: Podcast }) {
   const subtitleColor = useMemo(() => {
-    const index =
-      Math.abs(
-        podcast.trackId
-          .toString()
-          .split("")
-          .reduce((acc, char) => {
-            return acc + char.charCodeAt(0);
-          }, 0)
-      ) % cardSubtitlColors.length;
-    return cardSubtitlColors[index];
+    return pickHashedColor(podcast.trackId, cardSubtitlColors);
   }, [podcast.trackId]);
 
   return (

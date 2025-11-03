@@ -41,25 +41,30 @@ class SearchController {
     }));
 
     if (podcastsData.length > 0) {
-      await this.fastify.prisma.podcast.createMany({
-        data: podcastsData,
-        skipDuplicates: true,
-      });
-
-      await this.fastify.prisma.searchTerm.upsert({
-        where: { term },
-        create: {
-          term,
-          podcasts: {
-            connect: podcastsData.map((p: Podcast) => ({ trackId: p.trackId })),
+      await this.fastify.prisma.$transaction([
+        this.fastify.prisma.podcast.createMany({
+          data: podcastsData,
+          skipDuplicates: true,
+        }),
+        this.fastify.prisma.searchTerm.upsert({
+          where: { term },
+          create: {
+            term,
+            podcasts: {
+              connect: podcastsData.map((p: Podcast) => ({
+                trackId: p.trackId,
+              })),
+            },
           },
-        },
-        update: {
-          podcasts: {
-            connect: podcastsData.map((p: Podcast) => ({ trackId: p.trackId })),
+          update: {
+            podcasts: {
+              connect: podcastsData.map((p: Podcast) => ({
+                trackId: p.trackId,
+              })),
+            },
           },
-        },
-      });
+        }),
+      ]);
     }
 
     return podcastsData;

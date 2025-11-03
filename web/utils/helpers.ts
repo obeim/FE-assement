@@ -9,3 +9,14 @@ export function debounce<F extends (...args: any[]) => void>(
     timer = setTimeout(() => fn(...args), delay);
   };
 }
+
+export function pickHashedColor(id: string | number, colorArray: string[]) {
+  const index =
+    Math.abs(
+      id
+        .toString()
+        .split("")
+        .reduce((acc, char) => acc + char.charCodeAt(0), 0)
+    ) % colorArray.length;
+  return colorArray[index];
+}

@@ -4,6 +4,7 @@ import CustomDropdownMenu from "./DropdownMenu";
 import { useMemo } from "react";
 import { cardSubtitlColors } from "../utils/constants";
 import Play from "../icons/Play";
+import { pickHashedColor } from "../utils/helpers";
 
 interface cardProps {
   episode: Podcast;
@@ -17,34 +18,16 @@ export const EpisodeCard = ({ episode }: cardProps) => {
   ];
 
   const pickbgColor = useMemo(() => {
-    const index =
-      Math.abs(
-        episode.trackId
-          .toString()
-          .split("")
-          .reduce((acc, char) => {
-            return acc + char.charCodeAt(0);
-          }, 0)
-      ) % bgColors.length;
-    return bgColors[index];
+    return pickHashedColor(episode.trackId, bgColors);
   }, [episode.trackId]);
 
   const subtitleColor = useMemo(() => {
-    const index =
-      Math.abs(
-        episode.trackId
-          .toString()
-          .split("")
-          .reduce((acc, char) => {
-            return acc + char.charCodeAt(0);
-          }, 0)
-      ) % cardSubtitlColors.length;
-    return cardSubtitlColors[index];
+    return pickHashedColor(episode.trackId, cardSubtitlColors);
   }, [episode.trackId]);
 
   return (
     <div
-      className="group relative group: rounded transition-all  cursor-pointer
+      className="group relative rounded transition-all  cursor-pointer
     duration-300 overflow-hidden shadow-[inset_0_1px_1px_hsl(240,10%,20%),_0_2px_4px_rgba(0,0,0,0.05)]"
     >
       <span
@@ -52,13 +35,16 @@ export const EpisodeCard = ({ episode }: cardProps) => {
         style={{ background: pickbgColor }}
       />
       <div className="flex gap-3  relative z-10">
-        <div className="relative w-24 h-24 flex-shrink-0 rounded overflow-hidden">
+        <div className="relative w-24 h-24 flex-shrink-0 rounded overflow-hidden group/image">
           <Image
             src={episode.artworkUrl}
             alt={episode.trackName}
             fill
             className="object-cover"
           />
+          <div className="group-hover/image:flex hidden justify-center items-center z-10 absolute w-full h-full  bg-black/60">
+            <Play />
+          </div>
         </div>
 
         <div className="flex-1 min-w-0 flex flex-col justify-between p-3">
@@ -98,20 +84,11 @@ export const EpisodeCard = ({ episode }: cardProps) => {
 
 export const EpisodeCardCompact = ({ episode }: cardProps) => {
   const subtitleColor = useMemo(() => {
-    const index =
-      Math.abs(
-        episode.trackId
-          .toString()
-          .split("")
-          .reduce((acc, char) => {
-            return acc + char.charCodeAt(0);
-          }, 0)
-      ) % cardSubtitlColors.length;
-    return cardSubtitlColors[index];
+    return pickHashedColor(episode.trackId, cardSubtitlColors);
   }, [episode.trackId]);
 
   return (
-    <div className="flex items-center gap-3 p-2 hover:bg-black/40 transition-colors group border-b-[1px] border-b-[#24242A]">
+    <div className="flex items-center gap-3 p-2 hover:bg-black/40 transition-colors group border-b-[1px] border-b-[#24242A] cursor-pointer">
       <Image
         src={episode.artworkUrl}
         alt={episode.trackName}
@@ -145,16 +122,7 @@ export const EpisodeCardCompact = ({ episode }: cardProps) => {
 
 export const EpisodeCardList = ({ episode }: cardProps) => {
   const subtitleColor = useMemo(() => {
-    const index =
-      Math.abs(
-        episode.trackId
-          .toString()
-          .split("")
-          .reduce((acc, char) => {
-            return acc + char.charCodeAt(0);
-          }, 0)
-      ) % cardSubtitlColors.length;
-    return cardSubtitlColors[index];
+    return pickHashedColor(episode.trackId, cardSubtitlColors);
   }, [episode.trackId]);
 
   return (
